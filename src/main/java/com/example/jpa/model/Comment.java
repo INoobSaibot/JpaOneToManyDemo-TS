@@ -9,6 +9,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "comments")
 public class Comment extends AuditModel {
+    private static final long serialVersionUID = -8381844295737573007L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,4 +24,37 @@ public class Comment extends AuditModel {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Post post;
+
+
+    public Long getId()
+	{
+		return this.id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+    }
+    
+	public String getText()
+	{
+		return this.text;
+	}
+
+	public void setText(String text)
+	{
+		this.text = text;
+	}
+
+	public Post getPost()
+	{
+		return this.post;
+	}
+
+	public void setPost(Post post)
+	{
+		this.post = post;
+	}
+
+
 }
