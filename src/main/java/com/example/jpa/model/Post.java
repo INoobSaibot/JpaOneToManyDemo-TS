@@ -24,7 +24,16 @@ public class Post extends AuditModel {
     @Lob
     private String content;
 
-    public String getContent()
+		public String getDescription()
+	{
+		return this.description;
+	}
+
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+		public String getContent()
 	{
 		return this.content;
 	}

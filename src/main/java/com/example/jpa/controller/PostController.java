@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +36,7 @@ public class PostController {
     }
 
     @PutMapping("posts/{postId}")
-    public Post updatePost(@PathVariable Long id, @Valid @RequestBody Post postRequest) {
+    public Post updatePost(@PathVariable Long postId, @Valid @RequestBody Post postRequest) {
         return postRepository.findById(postId).map(post -> {
             post.setTitle(postRequest.getTitle());
             post.setDescription(postRequest.getDescription());
@@ -44,5 +45,12 @@ public class PostController {
         }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
     }
     
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<?> deletePost(@PathVariable Long postId) {
+        return postRepository.findById(postId).map(post -> {
+            postRepository.delete(post);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
+    }
 
 }
